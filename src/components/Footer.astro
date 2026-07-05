@@ -1,0 +1,54 @@
+---
+import { ASSETS_URL, SITE_TAGLINE } from "../lib/constants";
+
+const year = new Date().getFullYear();
+
+const quickLinks = [
+  { href: "/about/faq/", label: "FAQ" },
+  { href: "/membership/intro-process/", label: "How to Apply" },
+  { href: "https://schedule.csh.rit.edu/", label: "RIT ScheduleMaker" },
+  { href: "/blog/", label: "Blog" },
+  { href: "https://constitution.csh.rit.edu/", label: "Constitution" },
+];
+
+const socialLinks = [
+  { href: "https://github.com/computersciencehouse/", label: "GitHub" },
+  { href: "https://www.facebook.com/RITCSH/", label: "Facebook" },
+  { href: "https://www.instagram.com/computersciencehouse/", label: "Instagram" },
+];
+---
+
+<footer class="mt-24">
+  <div class="bg-csh-pink text-white">
+    <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-6 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+      <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
+        {quickLinks.map((link) => (
+          <a href={link.href} class="hover:underline">{link.label}</a>
+        ))}
+      </nav>
+      <div class="flex justify-center gap-6 text-sm font-medium">
+        {socialLinks.map((link) => (
+          <a href={link.href} target="_blank" rel="noopener" class="hover:underline">{link.label}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-csh-blue text-white/90">
+    <div class="mx-auto grid max-w-7xl gap-4 px-4 py-8 text-center sm:px-6 lg:grid-cols-3 lg:items-center lg:text-left lg:px-8">
+      <div class="lg:col-span-3 flex flex-col items-center gap-3">
+        <img src={`${ASSETS_URL}/rit_csh.png`} alt="RIT and Computer Science House logos" class="h-16" loading="lazy" />
+        <p class="italic text-white/70">{SITE_TAGLINE}</p>
+      </div>
+      <div>
+        <a href="mailto:webmaster@csh.rit.edu" class="hover:underline">webmaster@csh.rit.edu</a>
+      </div>
+      <div>&copy; {year} Computer Science House</div>
+      <div class="lg:text-right">
+        <a href="https://github.com/computersciencehouse/cshpublicsite" target="_blank" rel="noopener" class="hover:underline">
+          Website on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

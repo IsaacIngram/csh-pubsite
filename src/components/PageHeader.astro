@@ -1,0 +1,20 @@
+---
+import { ASSETS_URL } from "../lib/constants";
+
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<div
+  class="relative flex h-64 items-center justify-center bg-cover bg-center bg-fixed text-center text-white"
+  style={`background-image: linear-gradient(rgba(20, 20, 30, 0.55), rgba(20, 20, 30, 0.55)), url(${ASSETS_URL}/hallway_blurred.jpg);`}
+>
+  <div class="px-4">
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
+    {subtitle && <p class="mt-3 text-lg text-white/85">{subtitle}</p>}
+  </div>
+</div>

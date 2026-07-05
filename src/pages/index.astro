@@ -1,0 +1,146 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { ASSETS_URL } from "../lib/constants";
+import { sponsors } from "../data/sponsors";
+import { getLogoAsset } from "../lib/dominantColor";
+
+const heroImages = [
+  { file: "welcome_back_large", alt: "A group of CSHers standing in front of a lake" },
+  { file: "server_room", alt: "A CSH member stands at a terminal in the CSH server room" },
+  { file: "rock", alt: "CSHers crowd around a rock painted red with a CSH logo on it in white" },
+  { file: "science_house_2019", alt: "A sign that reads Science House with CSHers in the background. Taken at Fall Camping 2019" },
+  { file: "holiday_dinner_2019", alt: "CSHers pose for a group photo after Holiday Dinner 2019" },
+  { file: "fall_camping_group_2019", alt: "A group of CSHers at Fall Camping 2019" },
+  { file: "lonnie_solder", alt: "A man looks through a microscope to solder with a large screen on the left showing the circuit board being soldered" },
+];
+
+const tripleCards = [
+  { href: "/about/", title: "About us", image: `${ASSETS_URL}/disk.webp` },
+  { href: "/about/projects/", title: "Our projects", image: `${ASSETS_URL}/drink.webp` },
+  { href: "/about/tour/", title: "Visit CSH", image: `${ASSETS_URL}/project_room.webp` },
+];
+
+const workingOn = [
+  { title: "Server room upgrade", desc: "Bringing our servers up to date with the help of Wayfair.", image: `${ASSETS_URL}/server.webp`, alt: "A picture of CSH's server racks" },
+  { title: "Bits 'n Bytes", desc: "An AI powered vending machine", image: `${ASSETS_URL}/TUNES.webp`, alt: "A wooden structure with lights, shelves, and snacks, the bits 'n bytes project." },
+  { title: "Infosys", desc: "An information display system", image: `${ASSETS_URL}/infosys.webp`, alt: "A LED matrix that makes up CSH's Infosys" },
+  { title: "Letmein", desc: "A physical notification system for members", image: `${ASSETS_URL}/letmein.webp`, alt: "A raspberry pi and pencil sharpener on the wall, CSH's letmein system" },
+];
+
+const stats = [
+  { big: "75", tag: "Active Members", desc: "Who make up the heart of our community." },
+  { big: "3rd", tag: "Greatest Hack", desc: "Of all time (as ranked by PCMAG in 2008) was the creation of CSH's internet-connected drink machines." },
+  { big: "1,475", tag: "Alumni", desc: "Provide current CSH members with a large network of knowledge and professional connections." },
+  { big: "38", tag: "Rooms on-floor", desc: "In RIT's Fredericka Douglass Sprague Perry Hall, a hub of campus life." },
+  { big: "9", tag: "Special-purpose rooms", desc: "That provide members with spaces to work on projects, hang out, or study." },
+];
+
+const featuredSponsors = await Promise.all(
+  [...sponsors]
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 6)
+    .map(async (s) => ({ ...s, ...(await getLogoAsset(`${ASSETS_URL}${s.logo}`)) })),
+);
+---
+
+<Layout active="home">
+  <section id="hero" class="relative h-[80vh] max-h-[720px] w-full overflow-hidden">
+    {heroImages.map((img, i) => (
+      <img
+        src={`${ASSETS_URL}/${img.file}.jpeg`}
+        alt={img.alt}
+        class:list={["hero-slide absolute inset-0 h-full w-full object-cover transition-opacity duration-1000", i === 0 ? "opacity-100" : "opacity-0"]}
+        loading={i === 0 ? "eager" : "lazy"}
+      />
+    ))}
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+  </section>
+
+  <h2 class="my-12 text-center text-3xl font-bold text-csh-blue sm:text-4xl">
+    Getting more done <span class="text-csh-pink">after 2am</span> than most people do all day.
+  </h2>
+
+  <section class="mx-auto grid max-w-6xl gap-6 px-4 pb-16 sm:grid-cols-3 sm:px-6 lg:px-8">
+    {tripleCards.map((card) => (
+      <a href={card.href} class="group relative block h-72 overflow-hidden rounded-xl shadow-lg">
+        <img src={card.image} alt="" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-black/10"></div>
+        <h2 class="absolute bottom-4 left-4 text-xl font-bold text-white">{card.title}</h2>
+      </a>
+    ))}
+  </section>
+
+  <section class="bg-csh-gray py-16">
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 sm:grid-cols-2 sm:px-6 lg:px-8">
+      <picture>
+        <source srcset={`${ASSETS_URL}/about_image.webp`} type="image/webp" />
+        <img src={`${ASSETS_URL}/about_image.jpeg`} alt="A group of CSHers at our annual camping trip" class="h-full w-full rounded-xl object-cover shadow-md" loading="lazy" />
+      </picture>
+      <div class="flex flex-col justify-center gap-4">
+        <p class="text-lg leading-relaxed text-slate-700">
+          Since 1976, <strong>Computer Science House</strong> has provided a revolutionary living and learning environment for its members. With unique facilities, an emphasis on hands-on learning, and a strong social atmosphere, CSH helps its members grow as professionals and more.
+        </p>
+        <a href="/about/" class="btn-primary self-start">More about CSH</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <h2 class="section-heading mb-10 text-center">Things we're working on ...</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {workingOn.map((item) => (
+        <div class="group relative h-56 overflow-hidden rounded-xl shadow-md">
+          <img src={item.image} alt={item.alt} class="h-full w-full object-cover transition duration-500 group-hover:scale-110" loading="lazy" />
+          <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/20 to-transparent p-4 text-white">
+            <h3 class="font-bold">{item.title}</h3>
+            <p class="text-sm text-white/85">{item.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-csh-blue py-16 text-white">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <h2 class="mb-10 text-center text-3xl font-bold sm:text-4xl">Some facts about us ...</h2>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+        {stats.map((stat) => (
+          <div class="text-center">
+            <p class="text-4xl font-black text-white">{stat.big}</p>
+            <p class="mt-1 font-semibold">{stat.tag}</p>
+            <p class="mt-2 text-sm text-white/70">{stat.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-csh-gray py-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <a href="/about/sponsors/">
+        <h2 class="section-heading mb-8 text-center hover:text-csh-pink">Sponsors</h2>
+      </a>
+      <div class="grid grid-cols-2 justify-items-center gap-8 sm:grid-cols-3 lg:grid-cols-6">
+        {featuredSponsors.map((s) => (
+          <a href={s.url} target="_blank" rel="noopener" class="flex h-40 w-40 items-center justify-center overflow-hidden rounded-xl transition hover:shadow-md" style={`background-color: ${s.bg}`}>
+            <img src={s.src} alt={s.name} class="h-full w-full object-contain p-3" loading="lazy" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const slides = document.querySelectorAll<HTMLImageElement>(".hero-slide");
+  let current = 0;
+  if (slides.length > 1) {
+    setInterval(() => {
+      slides[current]?.classList.remove("opacity-100");
+      slides[current]?.classList.add("opacity-0");
+      current = (current + 1) % slides.length;
+      slides[current]?.classList.remove("opacity-0");
+      slides[current]?.classList.add("opacity-100");
+    }, 5000);
+  }
+</script>

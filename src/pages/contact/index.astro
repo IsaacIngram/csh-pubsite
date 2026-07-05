@@ -1,0 +1,40 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+---
+
+<Layout title="Contact" description="Get in touch with Computer Science House." active="contact">
+  <PageHeader title="Contact" />
+
+  <div class="mx-auto grid max-w-5xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8">
+    <div>
+      <h2 class="text-2xl font-bold text-csh-blue">Send us a message</h2>
+      <div class="mt-4 space-y-4 text-slate-700">
+        <p>
+          For more information about CSH or to apply, contact our Evaluations Director:
+          <strong><a href="mailto:evals@csh.rit.edu" class="text-csh-pink hover:underline">evals@csh.rit.edu</a></strong>.
+        </p>
+        <p>
+          To schedule a company visit, or for more information about sponsoring CSH, contact our Chairman:
+          <strong><a href="mailto:chairman@csh.rit.edu" class="text-csh-pink hover:underline">chairman@csh.rit.edu</a></strong>.
+        </p>
+        <p>
+          For inquiries about our website, reach out to
+          <strong><a href="mailto:webmaster@csh.rit.edu" class="text-csh-pink hover:underline">webmaster@csh.rit.edu</a></strong>.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-bold text-csh-blue">Visit us</h2>
+      <p class="mt-4 text-slate-700">We're on the third-floor of Fredericka Douglass Sprague Perry Hall at RIT.</p>
+
+      <h2 class="mt-8 text-2xl font-bold text-csh-blue">Mailing address</h2>
+      <p class="mt-4 text-slate-700">
+        Computer Science House<br />
+        3999 Fredericka Douglass Sprague Perry Hall<br />
+        Rochester, NY 14623
+      </p>
+    </div>
+  </div>
+</Layout>

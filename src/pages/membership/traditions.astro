@@ -1,0 +1,58 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import { ASSETS_URL } from "../../lib/constants";
+
+const traditions = [
+  {
+    title: "Welcome Back",
+    image: "welcome-back.jpg",
+    alt: "CSHers hanging out at Welcome Back",
+    desc: "Welcome Back is a barbecue held at the beginning of each year to welcome the incoming freshman class. Traditionally, alumni come from far and wide to visit current floor members. We cook way too much food, tell stories, and participate in a variety of outdoor activities.",
+  },
+  {
+    title: "Camping",
+    image: "camping.jpg",
+    alt: "An aerial shot of the cabin we camp at for Fall Camping",
+    desc: "Every year, CSH goes out on an adventure to see if we can survive for a weekend in the wild. Surprisingly, a bunch of computer nerds can thrive without electricity for a few days.",
+  },
+  {
+    title: "Holiday Dinner",
+    image: "holiday-dinner.jpg",
+    alt: "A group of CSHers dressed formally for Holiday Dinner",
+    desc: "Holiday Dinner is our annual formal dinner that takes place right before Winter Break. All of CSH gets dressed up and has dinner at a classy restaurant.",
+  },
+  {
+    title: "Seminars",
+    image: "seminar.jpg",
+    alt: "CSHers in our User Center watching a member give a seminar",
+    desc: "Any member can hold a seminar to teach others a bit about a topic of their choosing. Subjects can range from programming to juggling and everything in between, and anyone can give one at any time.",
+  },
+  {
+    title: "Intramural Sports",
+    image: "intramurals.jpg",
+    alt: "A CSHer playing intramural Broomball",
+    desc: "We participate in most of the intramural sports RIT offers, including broomball, hockey, soccer, basketball, softball, dodgeball, and volleyball. While we aren't always the best team out there, we're always the best-looking (with our CSH jerseys) and have the most fans cheering us on! We've even won quite an impressive number of trophies in the past, which are proudly displayed in our library.",
+  },
+];
+---
+
+<Layout title="Traditions" description="The annual traditions and events that make up CSH's social calendar." active="membership-traditions">
+  <PageHeader title="Traditions" />
+
+  <div class="mx-auto max-w-6xl space-y-10 px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-lg text-slate-700">
+      CSH isn't just about working on projects. Our members love to engage in a variety of social activities. Many of these activities have persisted through the years to become traditions.
+    </p>
+
+    {traditions.map((t) => (
+      <div class="grid gap-6 lg:grid-cols-4">
+        <img src={`${ASSETS_URL}/traditions/${t.image}`} alt={t.alt} class="h-48 w-full rounded-xl object-cover shadow-md lg:col-span-1" loading="lazy" />
+        <div class="lg:col-span-3">
+          <h2 class="text-2xl font-bold text-csh-blue">{t.title}</h2>
+          <p class="mt-2 text-slate-700">{t.desc}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</Layout>

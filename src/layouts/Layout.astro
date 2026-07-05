@@ -1,0 +1,46 @@
+---
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { ASSETS_URL, SITE_TITLE, SITE_DESCRIPTION } from "../lib/constants";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  active?: string;
+}
+
+const { title, description = SITE_DESCRIPTION, active = "" } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+
+    <link rel="apple-touch-icon" sizes="180x180" href={`${ASSETS_URL}/favicon/apple-touch-icon.png`} />
+    <link rel="icon" type="image/png" sizes="32x32" href={`${ASSETS_URL}/favicon/favicon-32x32.png`} />
+    <link rel="icon" type="image/png" sizes="16x16" href={`${ASSETS_URL}/favicon/favicon-16x16.png`} />
+    <link rel="manifest" href={`${ASSETS_URL}/favicon/site.webmanifest`} />
+    <link rel="mask-icon" href={`${ASSETS_URL}/favicon/safari-pinned-tab.svg`} color="#B0197E" />
+    <link rel="shortcut icon" href={`${ASSETS_URL}/favicon/favicon.ico`} />
+    <meta name="msapplication-TileColor" content="#B0197E" />
+    <meta name="theme-color" content="#B0197E" />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class="min-h-screen bg-white text-slate-900">
+    <Nav active={active} />
+    <main class="pt-14">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

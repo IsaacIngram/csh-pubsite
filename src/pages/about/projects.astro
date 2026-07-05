@@ -1,0 +1,70 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import { ASSETS_URL } from "../../lib/constants";
+
+const projects = [
+  {
+    title: "Drink/Snack",
+    image: `${ASSETS_URL}/projects/drink.jpg`,
+    alt: "Two of CSH's networked vending machines, Drink and Snack.",
+    desc: "Drink and Snack are two of CSH's oldest projects. Networked vending machines allow members to order items from any internet browser using a credits system. A timer can also be specified to delay the release of a purchased item.",
+  },
+  {
+    title: "Schedule Maker",
+    href: "https://schedulemaker.csh.rit.edu",
+    image: `${ASSETS_URL}/projects/schedulemaker.jpg`,
+    alt: "The logo for CSH Schedule Maker",
+    desc: "Schedule Maker allows RIT students to plan their schedule for upcoming semesters. Users simply enter their course numbers and custom events and a list of all schedules that match their parameters will be shown. Because it is so easy and simple, Schedule Maker is now used by over 90% of RIT students.",
+  },
+  {
+    title: "Devcade",
+    href: "https://devcade.csh.rit.edu",
+    image: `${ASSETS_URL}/projects/devcade.jpeg`,
+    alt: "CSH's custom built arcade cabinet, Devcade.",
+    desc: "Devcade is a fully custom arcade machine made by a team of over a dozen CSH members. Devcade is an arcade built for developers, by developers. The arcade cabinet, software, and games for Devcade were mainly built during the Fall 2022 semester and the project is still being maintained and updated.",
+  },
+  {
+    title: "Harold",
+    image: `${ASSETS_URL}/projects/harold.jpg`,
+    alt: "Harold, a box with a sensor on it, that plays members' music",
+    desc: "With Harold, every member of CSH gets their own theme song. After a user uploads either their song or playlist to a web app, all they have to do is touch their iButton or RFID tag (received upon membership) to the appropriate reader.",
+  },
+  {
+    title: "CSH Arcade",
+    image: `${ASSETS_URL}/projects/arcade.jpg`,
+    alt: "Two custom arcade machines in the CSH library",
+    desc: "Two CSH members built this arcade cabinet from scratch. It emulates many classic arcade games from varying consoles and supports multiplayer. A second cabinet featuring a custom-made platforming game was also built. Both machines, along with other arcade cabinets CSH has acquired, are housed in our Library.",
+  },
+  {
+    title: "InfoSys",
+    image: `${ASSETS_URL}/projects/infosys.jpg`,
+    alt: "An automated display in our User Center displaying the weather, high scores, and more",
+    desc: "InfoSys is a multi-purpose display board located in our User Center. It is capable of displaying weather statistics, custom messages, and even real-time player data from video games.",
+  },
+];
+---
+
+<Layout title="Projects" description="A sample of notable projects built by Computer Science House members." active="about-projects">
+  <PageHeader title="Projects" />
+
+  <div class="mx-auto max-w-6xl space-y-4 px-4 py-16 sm:px-6 lg:px-8">
+    <p class="mb-8 text-lg text-slate-700">
+      Projects are an integral part of the living, learning experience at Computer Science House. This is a small sample of notable projects that our members have created:
+    </p>
+
+    <div class="space-y-10">
+      {projects.map((p) => (
+        <div class="grid gap-6 lg:grid-cols-4">
+          <img src={p.image} alt={p.alt} class="h-48 w-full rounded-xl object-cover shadow-md lg:col-span-1" loading="lazy" />
+          <div class="lg:col-span-3">
+            <h2 class="text-2xl font-bold text-csh-blue">
+              {p.href ? <a href={p.href} target="_blank" rel="noopener" class="hover:text-csh-pink">{p.title}</a> : p.title}
+            </h2>
+            <p class="mt-2 text-slate-700">{p.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>

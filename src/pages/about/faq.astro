@@ -1,0 +1,47 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+
+const faqs = [
+  {
+    q: "Do I need to be a Computer Science major to join?",
+    a: "Nope, CSH accepts students from any program at RIT!",
+  },
+  {
+    q: "Do I need to be a 1st year to join?",
+    a: 'Also no! You can join our introductory process at any point of your RIT academic career! <a href="/membership/intro-process/" class="text-csh-pink hover:underline">Learn more about applying</a>.',
+  },
+  {
+    q: "How do I join?",
+    a: 'Check out our page on <a href="/membership/intro-process/" class="text-csh-pink hover:underline">New Members</a> to learn more about applying and joining CSH.',
+  },
+  {
+    q: "Does being a member cost anything?",
+    a: "Our active membership dues are $80/semester. Our operating budget is formed every year from dues paid by members in addition to sponsorships, and helps fund improvements to our floor, member projects, and social events! Members unable to afford their dues can speak to our Financial Director and have their dues waived or adjusted.",
+  },
+  {
+    q: "Is CSH a fraternity?",
+    a: 'No, we\'re a Special Interest House: a space in RIT\'s dorms designed for students who share common interests to live together. Read more here about SIHs <a href="https://www.rit.edu/fa/housing/housing-option/special-interest-lifestyle-floors" target="_blank" rel="noopener" class="text-csh-pink hover:underline">here</a>, and more about RIT Fraternity and Sorority Life <a href="https://campusgroups.rit.edu/fsl/about/" target="_blank" rel="noopener" class="text-csh-pink hover:underline">here</a>.',
+  },
+];
+---
+
+<Layout title="FAQ" description="Frequently asked questions about joining and living at Computer Science House." active="about-faq">
+  <PageHeader title="Frequently Asked Questions" />
+
+  <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <dl class="divide-y divide-slate-200">
+      {faqs.map((item) => (
+        <div class="py-6">
+          <dt class="text-xl font-bold text-csh-blue">{item.q}</dt>
+          <dd class="mt-2 text-slate-700" set:html={item.a} />
+        </div>
+      ))}
+      <div class="py-6">
+        <dt class="text-xl font-bold text-csh-blue">
+          Can't find your question here? <a href="/contact/" class="text-csh-pink hover:underline">Contact us</a>.
+        </dt>
+      </div>
+    </dl>
+  </div>
+</Layout>

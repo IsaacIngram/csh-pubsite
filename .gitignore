@@ -1,9 +1,13 @@
-vendor/
-_site
-.sass-cache
-.jekyll-metadata
-.jekyll-cache
-npm-debug.log
-.bundle/
 node_modules/
-.firebase/
+dist/
+.astro/
+npm-debug.log
+.idea/
+.DS_Store
+
+# IDEs
+.vscode
+.idea
+
+# MacOS
+.DS_Store

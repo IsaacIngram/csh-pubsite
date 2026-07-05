@@ -1,0 +1,53 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import { ASSETS_URL } from "../../lib/constants";
+import { eboard } from "../../data/eboard";
+---
+
+<Layout title="Executive Board" description="Meet the elected executive board that keeps Computer Science House running." active="about-eboard">
+  <PageHeader title="Executive Board" />
+
+  <div class="mx-auto max-w-6xl space-y-4 px-4 py-16 sm:px-6 lg:px-8">
+    <p class="mb-8 text-lg text-slate-700">
+      The executive board is responsible for ensuring the functions integral to the CSH experience go off as smoothly as possible. Elected at the end of every academic year, they volunteer their time to help make floor an even better place to be.
+    </p>
+
+    <div class="space-y-12">
+      {eboard.map((member) => (
+        <div class="grid gap-6 lg:grid-cols-4">
+          <div class="group relative h-56 w-56 overflow-hidden rounded-xl shadow-md">
+            <img
+              src={`${ASSETS_URL}/eboard/${member.photoSlug}_joke.jpg`}
+              alt={`CSH ${member.role}`}
+              class="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
+            <img
+              src={`${ASSETS_URL}/eboard/${member.photoSlug}.jpg`}
+              alt={`CSH ${member.role}`}
+              class="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:opacity-0"
+              loading="lazy"
+            />
+          </div>
+          <div class="lg:col-span-3">
+            <h2 class="text-xl font-bold text-csh-blue">
+              {member.role} <a href={`mailto:${member.email}`} class="ml-1 text-sm font-normal text-csh-pink hover:underline">{member.email}</a>
+            </h2>
+            <h3 class="mt-1 flex flex-wrap gap-x-3 text-lg font-semibold text-slate-800">
+              {member.members.map((person) => (
+                <span>
+                  {person.name}
+                  {person.linkedin && (
+                    <a href={person.linkedin} target="_blank" rel="noopener" class="ml-1 text-sm font-normal text-csh-pink hover:underline">LinkedIn</a>
+                  )}
+                </span>
+              ))}
+            </h3>
+            <p class="mt-2 text-slate-700">{member.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>

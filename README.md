@@ -1,26 +1,78 @@
-# Pubsite - [csh.rit.edu](https://csh.rit.edu)
+# CSH Public Site
 
-The public facing website for [Rochester Institute of Technology](https://rit.edu/)'s [Computer Science House](https://csh.rit.edu).
+The public website for [Computer Science House](https://csh.rit.edu), built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com).
 
-## Overview
+## Project structure
 
-This site is written using [Jekyll](https://jekyllrb.com/), a static site generator built with Ruby, and uses Sass and JavaScript ES6.
+```text
+src/
+├── components/       Nav, Footer, PageHeader, LogoGrid, etc.
+├── content/blog/      Markdown blog posts (Astro content collection)
+├── content.config.ts  Blog collection schema
+├── data/              Eboard, sponsors, alumni, and tour room data
+├── layouts/Layout.astro
+├── lib/                Shared constants (asset host URL, site metadata) and helpers
+└── pages/              File-based routes (index, about/, membership/, contact/, blog/, 404)
+```
 
-## Local Development
+Real photos (hero carousel, eboard, sponsors, alumni logos, tour rooms) are not stored in this
+repo — they're referenced directly from `https://assets.csh.rit.edu/pubsite` (see
+`src/lib/constants.ts`).
 
-Build the container:  `docker build -t pubsite .`  
-Run the container: `docker run -p 4000:80 pubsite` or pick your favorite port
-You will be able to access the site at http://localhost:4000.
+## Commands
 
-You can either edit files in the container, or rebuild the container when you want to test changes.
+| Command             | Action                                       |
+| :------------------- | :-------------------------------------------- |
+| `npm install`         | Install dependencies                          |
+| `npm run dev`         | Start the local dev server at `localhost:4321` |
+| `npm run build`       | Build the production site to `./dist/`        |
+| `npm run preview`     | Preview the production build locally          |
 
-## Contributing
+## Adding a blog post
 
-1. [Fork](https://help.github.com/en/articles/fork-a-repo) this repository
-    - Create a new [git branch](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell) if your change is more than a small tweak (`git checkout -b BRANCH-NAME-HERE`)
-3. Make your changes locally, commit, and push to your fork
-4. Create a [Pull Request](https://help.github.com/en/articles/about-pull-requests) on this repo for our Webmasters to review
+Drop a new Markdown file in `src/content/blog/`, e.g. `src/content/blog/my-project.md`:
 
-## Questions/Concerns
+```md
+---
+title: My Project
+date: 2026-01-01
+description: A short summary shown on the blog index.
+categories: [projects]
+author: Your Name
+authorImage: https://example.com/avatar.jpg
+authorBio: Optional one-line bio.
+authorEmail: you@csh.rit.edu
+authorSocial:
+  github: https://github.com/you
+  linkedin: https://www.linkedin.com/in/you
+image: /projects/my-project.png
+---
 
-Please file an [Issue](https://github.com/ComputerScienceHouse/pubsite/issues/new) on this repository or contact [webmaster@csh.rit.edu](mailto:webmaster@csh.rit.edu) with inquiries about the site.
+Post content in Markdown goes here.
+```
+
+`image` is a path relative to the asset host (`https://assets.csh.rit.edu/pubsite`). It's
+optional — posts without one get a deterministic colored placeholder on the blog index.
+
+## Updating eboard, sponsors, alumni, or tour rooms
+
+These are plain TypeScript data files, edited directly (no CMS):
+
+- `src/data/eboard.ts` — executive board roster
+- `src/data/sponsors.ts` — sponsor logos (also used for the homepage's random sponsor teaser)
+- `src/data/alumni.ts` — alumni company logos
+- `src/data/tourRooms.ts` — rooms shown on the virtual tour page
+
+## Deployment
+
+The site builds to static HTML (`npm run build` → `dist/`) and ships in a Docker image:
+
+```sh
+docker build -t cshpubsite .
+docker run -p 8080:8080 cshpubsite
+```
+
+The image is a multi-stage build: `node:22-alpine` builds the Astro site, then
+`nginxinc/nginx-unprivileged` serves the static output on port 8080. That nginx image already
+runs as a non-root user and tolerates the arbitrary UID that OpenShift/OKD assigns to containers,
+so no extra `USER`/permission setup is needed for deployment there.

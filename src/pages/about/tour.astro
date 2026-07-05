@@ -1,0 +1,51 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import { ASSETS_URL } from "../../lib/constants";
+import { tourRooms } from "../../data/tourRooms";
+---
+
+<Layout title="Tour" description="Take a virtual tour of Computer Science House's floor and facilities." active="about-tour">
+  <PageHeader title="Tour" />
+
+  <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mb-8 flex justify-center">
+      <select id="room-select" class="rounded-md border border-slate-300 px-4 py-2 text-slate-800 shadow-sm focus:border-csh-pink focus:outline-none">
+        {tourRooms.map((room) => (
+          <option value={room.id}>{room.title}</option>
+        ))}
+      </select>
+    </div>
+
+    <h2 id="tour-title" class="text-center text-2xl font-bold text-csh-blue">{tourRooms[0].title}</h2>
+    <p id="tour-description" class="mx-auto mt-3 max-w-2xl text-center text-slate-700">{tourRooms[0].description}</p>
+
+    <div id="tour-gallery" class="mt-8 grid gap-4 sm:grid-cols-2">
+      {tourRooms[0].photos.map((photo) => (
+        <img src={`${ASSETS_URL}${photo}.jpg`} alt={`CSH ${tourRooms[0].title}`} class="w-full rounded-xl object-cover shadow-md" loading="lazy" />
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ rooms: tourRooms, assetsUrl: ASSETS_URL }}>
+  const select = document.getElementById("room-select");
+  const title = document.getElementById("tour-title");
+  const description = document.getElementById("tour-description");
+  const gallery = document.getElementById("tour-gallery");
+
+  function renderRoom(id) {
+    const room = rooms.find((r) => r.id === id);
+    if (!room) return;
+    title.textContent = room.title;
+    description.textContent = room.description;
+    gallery.innerHTML = room.photos
+      .map(
+        (photo) =>
+          `<img src="${assetsUrl}${photo}.jpg" alt="CSH ${room.title}" class="w-full rounded-xl object-cover shadow-md" loading="lazy" />`
+      )
+      .join("");
+  }
+
+  select?.addEventListener("change", (e) => renderRoom(e.target.value));
+</script>

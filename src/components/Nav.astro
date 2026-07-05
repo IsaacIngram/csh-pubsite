@@ -1,0 +1,123 @@
+---
+import { ASSETS_URL } from "../lib/constants";
+
+interface Props {
+  active?: string;
+}
+
+const { active = "" } = Astro.props;
+
+const aboutLinks = [
+  { key: "about", href: "/about/", label: "About CSH" },
+  { key: "about-faq", href: "/about/faq/", label: "FAQ" },
+  { key: "about-projects", href: "/about/projects/", label: "Projects" },
+  { key: "about-alumni", href: "/about/alumni/", label: "Alumni" },
+  { key: "about-eboard", href: "/about/eboard/", label: "Eboard" },
+  { key: "about-sponsors", href: "/about/sponsors/", label: "Sponsors" },
+  { key: "about-tour", href: "/about/tour/", label: "Tour" },
+];
+
+const membershipLinks = [
+  { key: "membership", href: "/membership/", label: "Overview" },
+  { key: "membership-intro", href: "/membership/intro-process/", label: "New Members" },
+  { key: "membership-traditions", href: "/membership/traditions/", label: "Traditions" },
+];
+
+const isActive = (key: string) => active === key;
+const groupActive = (prefix: string) => active.startsWith(prefix);
+---
+
+<header class="fixed inset-x-0 top-0 z-50 bg-black/40 backdrop-blur supports-[backdrop-filter]:bg-black/30">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+    <a href="/" aria-label="Return to Computer Science House's homepage" class="flex items-center gap-2">
+      <img src={`${ASSETS_URL}/csh_logo_square.svg`} alt="" class="h-8 w-8" />
+      <span class="text-lg font-bold tracking-tight text-white">CSH</span>
+    </a>
+
+    <button
+      id="nav-toggle"
+      type="button"
+      aria-controls="nav-menu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      class="flex h-9 w-9 flex-col items-center justify-center gap-1.5 lg:hidden"
+    >
+      <span class="h-0.5 w-6 bg-white"></span>
+      <span class="h-0.5 w-6 bg-white"></span>
+      <span class="h-0.5 w-6 bg-white"></span>
+    </button>
+
+    <nav id="nav-menu" class="hidden w-full flex-col gap-1 pb-4 lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-1 lg:pb-0">
+      <a href="/" class:list={["nav-link", { "nav-link-active": isActive("home") }]}>Home</a>
+
+      <div class="relative lg:group">
+        <button type="button" class:list={["nav-link nav-dropdown-toggle", { "nav-link-active": groupActive("about") }]}>
+          About <span aria-hidden="true" class="ml-1 inline-block text-xs">&#9662;</span>
+        </button>
+        <div class="nav-dropdown">
+          {aboutLinks.map((link) => (
+            <a href={link.href} class:list={["nav-dropdown-link", { "nav-dropdown-link-active": isActive(link.key) }]}>{link.label}</a>
+          ))}
+        </div>
+      </div>
+
+      <div class="relative lg:group">
+        <button type="button" class:list={["nav-link nav-dropdown-toggle", { "nav-link-active": groupActive("membership") }]}>
+          Membership <span aria-hidden="true" class="ml-1 inline-block text-xs">&#9662;</span>
+        </button>
+        <div class="nav-dropdown">
+          {membershipLinks.map((link) => (
+            <a href={link.href} class:list={["nav-dropdown-link", { "nav-dropdown-link-active": isActive(link.key) }]}>{link.label}</a>
+          ))}
+        </div>
+      </div>
+
+      <a href="/blog/" class:list={["nav-link", { "nav-link-active": isActive("blog") }]}>Blog</a>
+      <a href="https://www.rit.edu/giving/ComputerScienceHouse" target="_blank" rel="noopener" class="nav-link">Donate</a>
+      <a href="/contact/" class:list={["nav-link", { "nav-link-active": isActive("contact") }]}>Contact</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  @reference "../styles/global.css";
+
+  .nav-link {
+    @apply block rounded-md px-3 py-2 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white;
+  }
+  .nav-link-active {
+    @apply text-csh-pink font-semibold;
+  }
+  .nav-dropdown-toggle {
+    @apply flex w-full items-center lg:w-auto;
+  }
+  .nav-dropdown {
+    @apply static mt-1 flex flex-col gap-0.5 border-l-2 border-white/10 pl-4 lg:absolute lg:left-0 lg:top-full lg:mt-0 lg:hidden lg:min-w-48 lg:flex-col lg:gap-0 lg:rounded-md lg:border-l-0 lg:bg-black/80 lg:backdrop-blur lg:p-2 lg:pl-2 lg:shadow-lg lg:group-hover:flex;
+  }
+  .nav-dropdown-link {
+    @apply block rounded-md px-3 py-1.5 text-sm text-white/80 transition hover:bg-white/10 hover:text-white;
+  }
+  .nav-dropdown-link-active {
+    @apply text-csh-pink font-semibold;
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const menu = document.getElementById("nav-menu");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = menu?.classList.toggle("flex");
+    menu?.classList.toggle("hidden");
+    toggle.setAttribute("aria-expanded", String(!!isOpen));
+  });
+
+  document.querySelectorAll(".nav-dropdown-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (window.innerWidth >= 1024) return;
+      const dropdown = btn.nextElementSibling;
+      dropdown?.classList.toggle("hidden");
+      dropdown?.classList.toggle("flex");
+    });
+  });
+</script>

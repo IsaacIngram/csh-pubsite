@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import LogoGrid from "../../components/LogoGrid.astro";
+import { sponsors } from "../../data/sponsors";
+---
+
+<Layout title="Sponsors" description="The generous sponsors who make Computer Science House's work possible." active="about-sponsors">
+  <PageHeader title="Sponsors" />
+
+  <div class="mx-auto max-w-6xl space-y-8 px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-lg text-slate-700">
+      Computer Science House has been fortunate enough to have a myriad of very generous sponsors. Without their support it would be impossible to learn, grow, and innovate as we do.
+    </p>
+    <LogoGrid logos={sponsors} />
+  </div>
+</Layout>

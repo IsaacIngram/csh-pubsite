@@ -1,20 +1,16 @@
-FROM docker.io/jekyll/builder as builder
-RUN gem install bundler:2.2.3
-RUN mkdir /site; \
-    chown -R jekyll:jekyll /site
-WORKDIR /site
-COPY Gemfile Gemfile.lock /site/
-RUN bundle install
-COPY . /site/
-RUN bundle exec rake build:production 
+# Build the static Astro site
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
 
-FROM docker.io/httpd:2.4
-RUN apt update && apt install -y sssd
-RUN rm -rf /usr/local/apache2/htdocs/*
-COPY --from=builder /site/_site/ /usr/local/apache2/htdocs/
-COPY httpd-suffix.conf httpd-suffix.conf
-RUN cat httpd-suffix.conf >> /usr/local/apache2/conf/httpd.conf
-COPY entrypoint.sh /entrypoint.sh
-EXPOSE 80
-ENTRYPOINT ["/usr/bin/bash", "/entrypoint.sh"]
-CMD ["httpd-foreground"]
+# Serve it with an unprivileged nginx image (OpenShift/OKD run containers
+# as an arbitrary, non-root UID from the root group - this image already
+# supports that out of the box).
+FROM nginxinc/nginx-unprivileged:1.27-alpine
+COPY --chown=nginx:0 nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build --chown=nginx:0 /app/dist /usr/share/nginx/html
+
+EXPOSE 8080

@@ -1,0 +1,71 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import { ASSETS_URL } from "../../lib/constants";
+---
+
+<Layout title="Membership" description="How to join Computer Science House, and what to expect as a member." active="membership">
+  <PageHeader title="Membership" />
+
+  <div class="mx-auto max-w-6xl space-y-12 px-4 py-16 sm:px-6 lg:px-8">
+    <div class="space-y-4 text-lg leading-relaxed text-slate-700">
+      <p>
+        Computer Science House boasts some of the best minds in almost every computer-related field. As a member, you will be meeting people who can help you with your classes, teach you new tricks, and assist you in making the absolute most of your college experience, as well as making professional connections and friendships that will last you your entire life.
+      </p>
+      <p>
+        You don't need to be majoring in Computer Science, Software Engineering, or even anything related. Maybe you're a business major, or perhaps an art student; all we expect is that you have an interest in computers, a willingness to be active on floor, and a desire to excel in all aspects of your life.
+      </p>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+      <div class="space-y-6 lg:col-span-2">
+        <div>
+          <h2 class="text-2xl font-bold text-csh-blue">Incoming Students</h2>
+          <p class="mt-2 text-slate-700">
+            Even before college, a great way to meet members and learn about CSH is to take a tour during RIT's open houses. On those days, members lead personalized tours of floor, highlighting our unique facilities, exemplary projects, and social atmosphere. For open house dates, visit the <a href="https://www.rit.edu/admissions/freshman" target="_blank" rel="noopener" class="text-csh-pink hover:underline">RIT admissions web site</a>. If you are unable to attend an open house, <a href="/contact/" class="text-csh-pink hover:underline">email our Evaluations Director</a> to schedule a time that is best for you. After being accepted to RIT, look for the Special Interest Housing selection in your RIT housing application to apply to CSH.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-csh-blue">Current Students</h2>
+          <p class="mt-2 text-slate-700">
+            Students already enrolled at RIT can apply to join CSH at any time. The best way to apply is to visit CSH (on the third floor of Fredericka Douglass Sprague Perry Hall) and pick up an application from our Evaluations Director. All majors and years are accepted and members can live on or off floor.
+          </p>
+        </div>
+      </div>
+      <img src={`${ASSETS_URL}/membership/openhouse.png`} alt="CSHers manning a booth at an RIT Open House" class="h-full w-full rounded-xl object-cover shadow-md" loading="lazy" />
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-bold text-csh-blue">Member Expectations</h2>
+      <p class="mt-2 text-slate-700">
+        CSH has a number of requirements for its members, made to both maintain involvement and ensure growth as members and professionals. CSH expects its members to:
+      </p>
+      <ul class="mt-3 list-disc space-y-1 pl-6 text-slate-700">
+        <li>Attend weekly committee and House meetings</li>
+        <li>Attend some of our many social events and technical seminars</li>
+        <li>Complete a "Major Project" each year to contribute to CSH or enhance one's knowledge</li>
+      </ul>
+      <p class="mt-3 text-slate-700">
+        For more information on our introductory process, <a href="/membership/intro-process/" class="text-csh-pink hover:underline">click here</a>.
+      </p>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+      <img src={`${ASSETS_URL}/membership/benefits.png`} alt="Two CSHers utilizing tools in our Project Room wood shop" class="h-full w-full rounded-xl object-cover shadow-md" loading="lazy" />
+      <div class="lg:col-span-2">
+        <h2 class="text-2xl font-bold text-csh-blue">Member Benefits</h2>
+        <p class="mt-2 text-slate-700">
+          CSH's perks more than make up for all the work that goes into membership. All members, both on-floor and off-floor, get the following benefits:
+        </p>
+        <ul class="mt-3 list-disc space-y-1 pl-6 text-slate-700">
+          <li>Access to all of CSH's facilities (i.e. the Project room) and resources (i.e. web hosting and email)</li>
+          <li>Ability to request funds for technical projects, social events, and more</li>
+          <li>Voting privileges at all committee and House meetings to approve funds, accept new members, and have a say in how CSH is run</li>
+          <li>Knowledge and advice from some of the brightest minds in computing and related fields</li>
+          <li>Networking, storytelling, and donations from alumni in the industry</li>
+          <li>Professional and personal connections that last a lifetime</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</Layout>
