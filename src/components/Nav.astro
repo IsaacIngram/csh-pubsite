@@ -50,7 +50,7 @@ const groupActive = (prefix: string) => active.startsWith(prefix);
     <nav id="nav-menu" class="hidden w-full flex-col gap-1 pb-4 lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-1 lg:pb-0">
       <a href="/" class:list={["nav-link", { "nav-link-active": isActive("home") }]}>Home</a>
 
-      <div class="relative lg:group">
+      <div class="relative group">
         <button type="button" class:list={["nav-link nav-dropdown-toggle", { "nav-link-active": groupActive("about") }]}>
           About <span aria-hidden="true" class="ml-1 inline-block text-xs">&#9662;</span>
         </button>
@@ -61,7 +61,7 @@ const groupActive = (prefix: string) => active.startsWith(prefix);
         </div>
       </div>
 
-      <div class="relative lg:group">
+      <div class="relative group">
         <button type="button" class:list={["nav-link nav-dropdown-toggle", { "nav-link-active": groupActive("membership") }]}>
           Membership <span aria-hidden="true" class="ml-1 inline-block text-xs">&#9662;</span>
         </button>
